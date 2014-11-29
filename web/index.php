@@ -52,6 +52,7 @@ $app->get('/{user}/{repo}/zipball/{ref}', function($user, $repo, $ref) use($app)
     }
 
     $link = $app['dropbox.client']->createShareableLink('/'.$path);
+    $link = str_replace('?dl=0', '?dl=1', $link);
 
     return $app->json([
         'link' => $link
