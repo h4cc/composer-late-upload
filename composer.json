@@ -1,0 +1,16 @@
+{
+    "name": "h4cc/composer-late-upload",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Julius Beckmann",
+            "email": "github@h4cc.de"
+        }
+    ],
+    "require": {
+        "silex/silex": "~1.2",
+        "league/flysystem": "~0.5.12",
+        "dropbox/dropbox-sdk": "~1.1.4",
+        "knplabs/github-api": "~1.3.1"
+    }
+}
