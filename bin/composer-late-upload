@@ -1,0 +1,39 @@
+#!/usr/bin/env php
+<?php
+
+if(!$argv[1]) {
+    die('Provide first argument with path to composer.lock');
+}
+
+$path = $argv[1];
+
+if(!file_exists($path)) {
+    die('File does not exist: '.$path);
+}
+
+$content = json_decode(file_get_contents($path));
+
+foreach($content->packages as $package) {
+
+    $dist = $package->dist;
+    $url = $dist->url;
+
+    if(stripos($url, 'api.github.com/repos')) {
+        echo 'Replacing url ', $url, "\n";
+
+        $appUrl = str_replace('https://api.github.com/repos/', 'https://composer-late-upload.herokuapp.com/', $url);
+        $data = json_decode(file_get_contents($appUrl));
+
+        if(!$data) {
+            die('Failed to get link for url '.$url);
+        }
+
+        $dist->url = $data->link;
+    }
+}
+
+$success = file_put_contents($path, json_encode($content));
+
+if(!$success) {
+    die('Writing lock file failed.');
+}
