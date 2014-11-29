@@ -7,7 +7,13 @@ use League\Flysystem\Filesystem;
 use League\Flysystem\Adapter\Dropbox as Adapter;
 use Symfony\Component\HttpFoundation\Response;
 
-require_once(__DIR__.'/../config/config.php');
+$token = getenv('DROPBOX_TOKEN');
+$appName = getenv('DROPBOX_APPNAME');
+$githubToken = getenv('GITHUB_TOKEN');
+
+if(file_exists(__DIR__.'/../config/config.php')) {
+    require_once(__DIR__.'/../config/config.php');
+}
 
 $client = new Client($token, $appName);
 $filesystem = new Filesystem(new Adapter($client, ''));
